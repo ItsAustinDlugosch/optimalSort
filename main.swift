@@ -1,41 +1,93 @@
-var wordsList : [String] = []
-while let input = readLine() {
-    wordsList.append(input)
+func swap(words: inout [String], one: Int, two: Int) {
+    let temp = words[one]
+    words[one] = words[two]
+    words[two] = temp
 }
 
-func swap(arr: inout [String], one: Int, two: Int) {
-    let placeholder = arr[one]
-    arr[one] = arr[two]
-    arr[two] = placeholder
-}
-
-func partition(low: Int, high: Int, arr: inout [String]) -> Int {
-    let pivot = arr[high]
-    var part = low - 1
+func partition(low: Int, high: Int, words: inout [String]) -> Int {
+    let pivot = words[high]
+    var i = low - 1
 
     for j in low ..< high {
-        if arr[j] < pivot {
-            part += 1
-            swap(arr: &arr, one: j, two: part)
+        if words[j] < pivot {
+            i += 1
+            swap(words: &words, one: i, two: j)
         }        
     }
-    swap(arr: &arr, one: part + 1, two: high)
-    return part + 1
+    swap(words: &words, one: i + 1, two: high)
+    return i + 1
 }
 
-func quicksort(low: Int, high: Int, arr: inout [String]) -> [String] {
-    if arr.count == 1 {
-        return arr
+func optimalSort(low: Int, high: Int, words: inout [String]) {
+    if low >= high {
+        return
     }
-    if low < high {
-        let pi = partition(low: low, high: high, arr: &arr)
-        let _  = quicksort(low : low, high: pi - 1, arr: &arr)
-        let _  = quicksort(low : pi + 1, high: high, arr: &arr)
+    var low = low
+    var high = high
+    while low < high {        
+        let pi = partition(low: low, high: high, words: &words)
+        if pi - low < high - pi {
+            optimalSort(low: low, high: pi - 1, words: &words)
+            low = pi + 1
+        } else {
+            optimalSort(low: pi + 1, high: high, words: &words)
+            high = pi - 1
+        }
     }
-    return arr
 }
 
-let sortedWords = quicksort(low: 0, high: wordsList.count - 1, arr: &wordsList)
-for i in sortedWords {
-    print(i)
+func main() {
+    var words : [String] = []
+    while let input = readLine() {
+        words.append(input)
+    }
+
+    var sorted = false
+
+    if words.count > 1 {
+        for i in 0 ... 2 {
+            if !sorted {
+                switch i {
+                case 0:
+                    print("Checking if in order")
+                    for i in  0 ..< words.count - 1 {
+                        if words[i] > words[i+1] {
+                            print("Not ordered")
+                            break
+                        }
+                        if i == words.count - 2 {
+                            print("Ordered")
+                            sorted = true
+                        }
+                    }              
+                case 1:
+                    print("Checking if in reverse-order")
+                    let reversedWords : [String] = words.reversed()
+                    for i in 0 ..< reversedWords.count - 1 {
+                        if reversedWords[i] > reversedWords[i+1] {                            
+                            print("Not reverse-ordered, \(reversedWords[i]) is larger than \(reversedWords[i+1])")
+                            break
+                        }
+                        if i == words.count - 2 {
+                            print("Reverse-Ordered")
+                            words = reversedWords
+                            sorted = true
+                        }
+                    }
+                case 2:
+                    print("Quick Sorting")
+                    optimalSort(low: 0, high: words.count - 1, words: &words)
+                    sorted = true
+                default:
+                    fatalError()
+                }
+            }
+        }
+    }
+    
+    for word in words {
+        print(word)
+    }
 }
+
+main()

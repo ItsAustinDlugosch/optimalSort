@@ -1,0 +1,11 @@
+{
+  "": {
+    "swift-dependencies": "/home/austin-dlugosch/Projects/CS-II/sorting/optimalSort/.build/x86_64-unknown-linux-gnu/debug/Simple.build/master.swiftdeps"
+  },
+  "/home/austin-dlugosch/Projects/CS-II/sorting/optimalSort/main.swift": {
+    "dependencies": "/home/austin-dlugosch/Projects/CS-II/sorting/optimalSort/.build/x86_64-unknown-linux-gnu/debug/Simple.build/main.d",
+    "object": "/home/austin-dlugosch/Projects/CS-II/sorting/optimalSort/.build/x86_64-unknown-linux-gnu/debug/Simple.build/main.swift.o",
+    "swiftmodule": "/home/austin-dlugosch/Projects/CS-II/sorting/optimalSort/.build/x86_64-unknown-linux-gnu/debug/Simple.build/main~partial.swiftmodule",
+    "swift-dependencies": "/home/austin-dlugosch/Projects/CS-II/sorting/optimalSort/.build/x86_64-unknown-linux-gnu/debug/Simple.build/main.swiftdeps"
+  }
+}
